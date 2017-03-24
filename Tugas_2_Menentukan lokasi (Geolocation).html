@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head><title>L200140050</title>
+        <!-- Memanggil Google Maps JS API -->
+        <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key= AIzaSyDNQjWFgd8IM215HAxvwaxIu_pc-g7RH8o">
+        </script>
+        <style type="text/css">
+              #mapDiv { width: 800px; height: 500px; }
+        </style>
+        <!-- Membuat map -->
+        <script type="text/javascript">
+              var map; // membuat global variabel
+              function initMap () {
+                    //Enabling new cartography and themes
+                    google.maps.visualRefresh = true;
+                    var mapOptions = {
+                          mapTypeId: google.maps.MapTypeId.ROADMAP, //Mengatur pengaturan default tipe map
+                          disableDefaultUI: true
+                    };
+                    //Getting map DOM element
+                    var mapElement = document.getElementById('mapDiv');
+                    //Creating a map with DOM element which is just obtained
+                    map = new google.maps.Map(mapElement, mapOptions);
+                    startButtonEvents();
+              }
+			  if (navigator.geolocation) {
+//minta ijin kepada user, jika diijinkan 
+//navigator.geolocation = True
+ 
+//membaca posisi/lokasi client (browser) saat ini
+navigator.geolocation.getCurrentPosition(
+  // position adalah data lokasi hasil pembacaan 
+  // berupa lokasi dalam json
+  function(position) {
+          console.log(position);   //menulis di konsole
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          var devCenter =  new google.maps.LatLng(lat, lng);// Menentukan lokasi saat ini kita berada
+		  map.setCenter(devCenter); // mengatur lokasi titik tengah peta(map) 
+		  map.setZoom(18); //memperbesar ukuran peta(18)
+                                    
+ console.log(latitude + " -- " + longitude);
+ 
+       });
+ 
+    }
+			  //Sebuah fungsi button untuk menentukan tipe map yang diinginkan.
+              function startButtonEvents () {
+                  document.getElementById('btnRoad').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+                  });
+                  document.getElementById('btnSat').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                  });
+                  document.getElementById('btnHyb').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+                  });
+                  document.getElementById('btnTer').addEventListener('click', function(){
+                      map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+                  });
+              }
+              google.maps.event.addDomListener(window, 'load', initMap);
+        </script>
+    </head>
+    <body bgcolor="#696969">
+		<center>
+        <h3><b>-------------------Tugas 2 - Menentukan Lokasi------------------</b></h3>
+        <input id="btnRoad" type="button" value="RoadMap">
+        <input id="btnSat" type="button" value="Satellite">
+        <input id="btnHyb" type="button" value="Hybrid">
+        <input id="btnTer" type="button" value="Terrain"><br/>
+        </br><div id="mapDiv"></div>
+		</center
+    </body>
+</html>
